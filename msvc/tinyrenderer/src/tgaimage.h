@@ -1,6 +1,4 @@
-#ifndef __IMAGE_H__
-#define __IMAGE_H__
-
+#pragma once
 #include <fstream>
 
 #pragma pack(push,1)
@@ -93,4 +91,3 @@ public:
 	void clear();
 };
 
-#endif //__IMAGE_H__
