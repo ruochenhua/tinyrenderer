@@ -1,6 +1,5 @@
 #pragma once
-#include <algorithm>
-#include "tgaimage.h"
+#include "common.h"
 using namespace std;
 
 //avoid floating point multiplication and addition, thus should be faster

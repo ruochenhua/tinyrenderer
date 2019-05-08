@@ -26,5 +26,14 @@
     <ClInclude Include="..\src\tgaimage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\line.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\triangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
