@@ -3,8 +3,8 @@
 using namespace std;
 using namespace glm;
 
-void inline DrawTriangle(ivec2 t[3], const TGAColor& color, TGAImage& image)
-{
+void inline DrawTriangleWithColor(ivec2 t[3], const TGAColor& color, TGAImage& image)
+{	
 	//find bounding box
 	ivec2 min, max;
 	max = ivec2(-99999, -99999);
@@ -35,16 +35,15 @@ void inline DrawTriangle(ivec2 t[3], const TGAColor& color, TGAImage& image)
 	{
 		for (int y = min.y; y <= max.y; ++y)
 		{
-			vec3 p(x, y, 0);
-			vec3 c1 = cross(p-a, ab);
-			float sign_0 = c1.z;
+			vec3 p(x, y, 0);			
+			float sign_0 = cross(p-a, ab).z;
 			float sign_1 = cross(p-b, bc).z;
 			float sign_2 = cross(p-c, ca).z;			
 
 			if ((sign_0 >= 0.0f && sign_1 >= 0.0f && sign_2 >= 0.0f)
 				|| (sign_0 <= 0.0f && sign_1 <= 0.0f && sign_2 <= 0.0f))
-			{
-				image.set(x, y, color);
+			{				
+				image.set(x, y, color);				
 			}
 		}
 	}
