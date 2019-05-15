@@ -21,11 +21,11 @@ void test_0()
 void test_1()
 {
 	TGAImage image(200, 200, TGAImage::RGB);
-	glm::ivec2 tri[] =
+	vec3 tri[] =
 	{
-		glm::ivec2(10, 10),
-		glm::ivec2(190, 160),
-		glm::ivec2(100, 30),
+		vec3(10, 10, 0),
+		vec3(190, 160, 0),
+		vec3(100, 30, 0),
 	};
 
 	DrawTriangleWithColor(tri, red, image);
@@ -37,7 +37,7 @@ void test_1()
 //draw obj model with lighting
 void test_2()
 {
-	TGAImage image(500, 500, TGAImage::RGB);
+	TGAImage image(500, 500, TGAImage::RGB);	
 	objl::Loader obj_loader;
 	bool loadout = obj_loader.LoadFile("../../../obj/african_head/african_head.obj");
 	if (!loadout)
@@ -66,8 +66,10 @@ void test_2()
 	float height_scale = max_y - min_y;
 
 	int scale = int(500.0f / std::max(width_scale, height_scale));
-	ivec2 mid_point(int((max_x + min_x) * scale / 2), int((max_y + min_y) * scale / 2));
-	ivec2 move_vec = (ivec2(500, 500) - mid_point) / 2;
+	vec3 mid_point((max_x + min_x) * scale *0.5f, (max_y + min_y) * scale *0.5f, 0.0f);
+	vec3 move_vec = (vec3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f) - mid_point) * 0.5f;
+
+	vector<float> z_buffer(SCREEN_HEIGHT * SCREEN_WIDTH, FLT_MIN);
 
 	for (int i = 0; i < obj_loader.LoadedMeshes.size(); ++i)
 	{
@@ -79,10 +81,10 @@ void test_2()
 			objl::Vertex ver_1 = curMesh.Vertices[curMesh.Indices[j + 1]];
 			objl::Vertex ver_2 = curMesh.Vertices[curMesh.Indices[j + 2]];
 
-			ivec2 ivertex[3];
-			ivertex[0] = ivec2(int(ver_0.Position.X * scale), int(ver_0.Position.Y * scale)) + move_vec;
-			ivertex[1] = ivec2(int(ver_1.Position.X * scale), int(ver_1.Position.Y * scale)) + move_vec;
-			ivertex[2] = ivec2(int(ver_2.Position.X * scale), int(ver_2.Position.Y * scale)) + move_vec;			
+			vec3 ivertex[3];
+			ivertex[0] = vec3(ver_0.Position.X * scale, ver_0.Position.Y * scale, 0.0f) + move_vec;
+			ivertex[1] = vec3(ver_1.Position.X * scale, ver_1.Position.Y * scale, 0.0f) + move_vec;
+			ivertex[2] = vec3(ver_2.Position.X * scale, ver_2.Position.Y * scale, 0.0f) + move_vec;			
 
 			//lighting
 			vec3 edge_01(ver_1.Position.X - ver_0.Position.X, ver_1.Position.Y - ver_0.Position.Y, ver_1.Position.Z - ver_0.Position.Z);
@@ -98,7 +100,8 @@ void test_2()
 					int(/*rand() %*/ 256 * intensity),
 					255);
 
-				DrawTriangleWithColor(ivertex, tri_color, image);
+			//	DrawTriangleWithColor(ivertex, tri_color, image);
+				DrawTriangleWithZBuffer(ivertex, tri_color, z_buffer, image);
 			}
 		}
 	}
