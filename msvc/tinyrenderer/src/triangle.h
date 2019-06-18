@@ -96,8 +96,7 @@ void inline DrawTriangleWithZBuffer(vec3 t[3], const TGAColor& color, vector<flo
 				{
 					z_buffer[x * SCREEN_WIDTH + y] = p_z;
 					image.set(x, y, color);
-				}
-					
+				}					
 			}
 		}
 	}

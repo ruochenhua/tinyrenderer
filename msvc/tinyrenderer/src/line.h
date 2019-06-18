@@ -46,11 +46,11 @@ void inline BresenhamLine(int x0, int y0, int x1, int y1, const TGAColor& color,
 
 void inline DrawLine(int x0, int y0, int x1, int y1, const TGAColor & color, TGAImage & image)
 {
-	int step = max(abs(x0 - x1), abs(y0 - y1));
+	int step = std::max(abs(x0 - x1), abs(y0 - y1));
 	for (int i = 0; i < step; ++i)
 	{
-		int x = x0 + (x1 - x0) / (float)step * i;
-		int y = y0 + (y1 - y0) / (float)step * i;
+		int x = int(x0 + (x1 - x0) / (float)step * i);
+		int y = int(y0 + (y1 - y0) / (float)step * i);
 		//		printf("x %d, y %d\n", x, y);
 		image.set(x, y, color);
 	}
