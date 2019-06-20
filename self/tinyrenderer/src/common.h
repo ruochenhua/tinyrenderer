@@ -1,3 +1,6 @@
+#ifndef _COMMOM_H_
+#define _COMMOM_H_
+
 #pragma once
 #include <algorithm>
 #include <vector>
@@ -9,3 +12,5 @@
 
 const int SCREEN_WIDTH = 500;
 const int SCREEN_HEIGHT = 500;
+
+#endif // !_COMMOM_H_

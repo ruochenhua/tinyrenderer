@@ -15,25 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\tgaimage.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\tgaimage.cpp" />
+    <ClCompile Include="..\src\camera.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\tgaimage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\line.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\triangle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClInclude Include="..\src\camera.h" />
+    <ClInclude Include="..\src\common.h" />
+    <ClInclude Include="..\src\line.h" />
+    <ClInclude Include="..\src\tgaimage.h" />
+    <ClInclude Include="..\src\triangle.h" />
   </ItemGroup>
 </Project>

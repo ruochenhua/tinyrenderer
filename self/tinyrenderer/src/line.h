@@ -1,3 +1,6 @@
+#ifndef _LINE_H_
+#define _LINE_H_
+
 #pragma once
 #include "common.h"
 using namespace std;
@@ -55,3 +58,5 @@ void inline DrawLine(int x0, int y0, int x1, int y1, const TGAColor & color, TGA
 		image.set(x, y, color);
 	}
 }
+
+#endif // !_LINE_H_

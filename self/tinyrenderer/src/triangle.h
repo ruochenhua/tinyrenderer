@@ -1,3 +1,6 @@
+#ifndef _TRIANGLE_H_
+#define _TRIANGLE_H_
+
 #pragma once
 #include "common.h"
 using namespace std;
@@ -23,8 +26,14 @@ vec3 BaryCentric(vec3 t[3], const vec3& p)
 	return vec3(1.0f-u-v, u, v);
 }
 
-void inline DrawTriangleWithColor(vec3 t[3], const TGAColor& color, TGAImage& image)
+void inline DrawTriangleWithColor(vec4 t[3], const TGAColor& color, TGAImage& image)
 {	
+	vec3 triagle[3] = {
+	vec3(t[0].x, t[0].y, t[0].z),
+	vec3(t[1].x, t[1].y, t[1].z),
+	vec3(t[2].x, t[2].y, t[2].z)
+	};
+
 	//find bounding box
 	ivec2 min, max;
 	max = ivec2(-99999, -99999);
@@ -48,7 +57,7 @@ void inline DrawTriangleWithColor(vec3 t[3], const TGAColor& color, TGAImage& im
 		{
  			vec3 p(x, y, 0);			
 
-			vec3 bc_coord = BaryCentric(t, p);
+			vec3 bc_coord = BaryCentric(triagle, p);
 			if (bc_coord.x > 0.0f && bc_coord.y > 0.0f && bc_coord.z > 0.0f)
 			{
 				image.set(x, y, color);
@@ -57,11 +66,16 @@ void inline DrawTriangleWithColor(vec3 t[3], const TGAColor& color, TGAImage& im
 	}
 }
 
-
-void inline DrawTriangleWithZBuffer(vec3 t[3], const TGAColor& color, vector<float>& z_buffer, TGAImage& image)
+void inline DrawTriangleWithZBuffer(vec4 t[3], const TGAColor& color, vector<float>& z_buffer, TGAImage& image)
 {
 	if (z_buffer.size() != SCREEN_HEIGHT * SCREEN_WIDTH)
 		return;
+
+	vec3 triagle[3] = {
+		vec3(t[0].x, t[0].y, t[0].z),
+		vec3(t[1].x, t[1].y, t[1].z),
+		vec3(t[2].x, t[2].y, t[2].z)
+	};
 
 	//find bounding box
 	ivec2 min, max;
@@ -78,21 +92,24 @@ void inline DrawTriangleWithZBuffer(vec3 t[3], const TGAColor& color, vector<flo
 			max.x = int(ceilf(t[i].x));
 		if (t[i].y > max.y)
 			max.y = int(ceilf(t[i].y));
-	}
+	}	
+
+	min.x = std::max(0, min.x);
+	min.y = std::max(0, min.y);
 
 	for (int x = min.x; x <= max.x; ++x)
 	{
 		for (int y = min.y; y <= max.y; ++y)
 		{
 			vec3 p(x, y, 0);
-
-			vec3 bc_coord = BaryCentric(t, p);	//u, v, 1-u-v
+			
+			vec3 bc_coord = BaryCentric(triagle, p);	//u, v, 1-u-v
 			if (bc_coord.x > 0.0f && bc_coord.y > 0.0f && bc_coord.z > 0.0f)
 			{
 				//barycentic coord represent point p's relationship to other vertices of the triangle
 				//p = u * a + v * b + (1-u-v)*c -> p.z = u*(a.z) + v*(b.z) + (1-u-z)*(c.z)
 				float p_z = bc_coord.x * t[0][2] + bc_coord.y * t[1][2] + bc_coord.z * t[2][2];
-				if (p_z < z_buffer[x * SCREEN_WIDTH + y])
+				if (p_z > z_buffer[x * SCREEN_WIDTH + y])
 				{
 					z_buffer[x * SCREEN_WIDTH + y] = p_z;
 					image.set(x, y, color);
@@ -101,3 +118,5 @@ void inline DrawTriangleWithZBuffer(vec3 t[3], const TGAColor& color, vector<flo
 		}
 	}
 }
+
+#endif // !_TRIANGLE_H_

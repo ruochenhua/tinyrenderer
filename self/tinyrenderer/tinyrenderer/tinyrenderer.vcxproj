@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\camera.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\tgaimage.cpp" />
   </ItemGroup>
@@ -131,6 +132,7 @@
     <ClInclude Include="..\src\line.h" />
     <ClInclude Include="..\src\tgaimage.h" />
     <ClInclude Include="..\src\triangle.h" />
+    <ClInclude Include="..\src\camera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
